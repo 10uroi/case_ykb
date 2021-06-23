@@ -1,7 +1,10 @@
 package com.ykb.vacation;
 
+import com.ykb.vacation.dto.VacationApprovalRequest;
 import com.ykb.vacation.dto.VacationRequest;
 import com.ykb.vacation.entity.User;
+import com.ykb.vacation.entity.Vacation;
+import com.ykb.vacation.enums.ApprovalType;
 import com.ykb.vacation.util.Converter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -111,5 +114,24 @@ class ApiRequestTest_0_1 {
                 });
     }
 
+    @Test
+    public void approvalVacation() throws Exception {
+        Vacation vacation = new Vacation();
+        vacation.setId(1l);
 
+        VacationApprovalRequest vacationRequest = new VacationApprovalRequest();
+
+        vacationRequest.setVacation(vacation);
+        vacationRequest.setApprovalType(ApprovalType.ACCEPT);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/vacation/approval")
+                .content(Converter.convert(vacationRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(mvcResult -> {
+                    log.info("Request  : " + mvcResult.getRequest().getPathInfo() + "?" + mvcResult.getRequest().getQueryString());
+                    log.info("Response : " + mvcResult.getResponse().getContentAsString());
+                });
+    }
 }

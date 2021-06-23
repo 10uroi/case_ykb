@@ -5,6 +5,7 @@ import com.ykb.vacation.dto.VoidResponse;
 import com.ykb.vacation.entity.User;
 import com.ykb.vacation.entity.Vacation;
 import com.ykb.vacation.entity.VacationConfig;
+import com.ykb.vacation.enums.ApprovalType;
 import com.ykb.vacation.repository.VacationRepository;
 import com.ykb.vacation.service.UserDetailService;
 import com.ykb.vacation.service.UserService;
@@ -66,6 +67,22 @@ public class VacationServiceImp implements VacationService {
             return new VoidResponse(false, "vac.success");
         else
             return new VoidResponse(false, "vac.error.db");
+    }
+
+    @Override
+    public VoidResponse approval(Vacation vacation, ApprovalType approvalType) {
+        if (vacation == null || vacation.getId() == null)
+            return new VoidResponse(true, "vac.not.found");
+
+        Vacation mVacation = vacationRepository.findById(vacation.getId()).orElse(null);
+        if (mVacation == null) return new VoidResponse(true, "vac.not.found");
+
+        if (mVacation.getApproval().equals(ApprovalType.WAITING) && !approvalType.equals(ApprovalType.WAITING)) {
+            mVacation.setApproval(approvalType);
+            vacationRepository.save(mVacation);
+            return new VoidResponse(false, "vac.change.approval");
+        }
+        return new VoidResponse(true, "vac.not.waiting");
     }
 
     /**

@@ -16,9 +16,9 @@ class UserServiceTest {
     @Test
     void getUser() {
 
-        User actual = userService.getUser(1l);
+        User actual = userService.getUser(100848l);
         User expected = new User();
-        expected.setName("Onur");
+        expected.setName("Fatih");
 
         assertEquals(actual.getName(), expected.getName());
     }
