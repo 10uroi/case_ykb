@@ -2,6 +2,7 @@ package com.ykb.vacation.api;
 
 import com.ykb.vacation.dto.VoidResponse;
 import com.ykb.vacation.entity.User;
+import com.ykb.vacation.language.LanguageFactory;
 import com.ykb.vacation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,8 @@ public class UserAPI {
     private UserService userService;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<VoidResponse> create(@RequestBody User user, @RequestParam String lang) {
-        return ResponseEntity.ok(userService.create(user));
+    public ResponseEntity<VoidResponse> create(@RequestBody User user, @RequestParam(required = false) String lang) {
+        return ResponseEntity.ok(LanguageFactory.convert(userService.create(user),lang));
     }
 
 }

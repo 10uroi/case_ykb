@@ -16,7 +16,7 @@ public class VacationAPI {
     private VacationServiceImp vacationServiceImp;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<VoidResponse> create(@RequestBody VacationRequest vacationRequest, @RequestParam String lang) {
+    public ResponseEntity<VoidResponse> create(@RequestBody VacationRequest vacationRequest, @RequestParam(required = false) String lang) {
         VoidResponse voidResponse = vacationServiceImp.create(vacationRequest);
         return ResponseEntity.ok(LanguageFactory.convert(voidResponse, lang));
     }
