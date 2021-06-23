@@ -34,6 +34,7 @@ class ApiRequestTest_0_1 {
     @Test
     public void createUser() throws Exception {
         User user = new User();
+        user.setId(1l);
         user.setName("Onur");
         user.setSurname("Ciner");
 
@@ -51,7 +52,7 @@ class ApiRequestTest_0_1 {
     @Test
     public void createVacationTwoDay() throws Exception {
         User user = new User();
-        //user.setId(1l);
+        user.setId(1l);
 
         VacationRequest vacationRequest = new VacationRequest();
 

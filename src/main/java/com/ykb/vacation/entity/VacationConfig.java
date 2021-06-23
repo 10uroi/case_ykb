@@ -25,4 +25,5 @@ public class VacationConfig {
         this.endYear = endYear;
         this.dayCount = dayCount;
     }
+
 }
